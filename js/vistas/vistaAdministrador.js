@@ -19,13 +19,28 @@ VistaAdministrador.prototype = {
   inicializar: function() {
     //llamar a los metodos para reconstruir la lista, configurar botones y validar formularios
     validacionDeFormulario();
+    this.reconstruirLista();
+    this.configuracionDeBotones();
   },
 
   construirElementoPregunta: function(pregunta){
     var contexto = this;
     var nuevoItem;
     //completar
+    // console.log(pregunta.textoPregunta)
+    nuevoItem= jQuery('<li></li>',{
+      id:'pregunta.id',
+      class:'list-group-item',
+      innerText: pregunta.textoPregunta
+    })
+    // nuevoItem= document.createElement('li');
+    // nuevoItem.className='list-group-item';
+    // nuevoItem.id='pregunta.id';
+    // var textoNuevoItem = document.createTextNode(pregunta.textoPregunta);
+    // nuevoItem.appendChild(textoNuevoItem);
+    
     //asignar a nuevoitem un elemento li con clase "list-group-item", id "pregunta.id" y texto "pregunta.textoPregunta"
+
     var interiorItem = $('.d-flex');
     var titulo = interiorItem.find('h5');
     titulo.text(pregunta.textoPregunta);
