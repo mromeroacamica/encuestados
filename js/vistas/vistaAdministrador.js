@@ -25,21 +25,22 @@ VistaAdministrador.prototype = {
 
   construirElementoPregunta: function (pregunta) {
     var contexto = this;
+    // console.log(pregunta)
     var nuevoItem;
     //completar
     // console.log(pregunta.textoPregunta)
-    nuevoItem = jQuery('<li></li>', {
-      id: 'pregunta.id',
-      class: 'list-group-item',
-      innerText: pregunta.textoPregunta
-    })
+    nuevoItem = $('<li>',{'class':'list-group-item','id': pregunta.id, 'textoPregunta': pregunta.textoPregunta})
+
+
     //asignar a nuevoitem un elemento li con clase "list-group-item", id "pregunta.id" y texto "pregunta.textoPregunta"
 
     var interiorItem = $('.d-flex');
     var titulo = interiorItem.find('h5');
     titulo.text(pregunta.textoPregunta);
     interiorItem.find('small').text(pregunta.cantidadPorRespuesta.map(function (resp) {
-      return " " + resp.textoRespuesta;
+      // console.log(resp.textoRespuesta) aca estaba puesto resp.textoRespuesta y daba error
+      // console.log(resp)
+      return " " + resp;
     }));
     nuevoItem.html($('.d-flex').html());
     return nuevoItem;
@@ -69,7 +70,8 @@ VistaAdministrador.prototype = {
         if (this.value === '') {
 
         } else {
-          respuestas.push(this.value);
+          var cantVotos= 0
+          respuestas.push({'textoRespuesta': this.value, 'cantidad': cantVotos});
 
         }
         // console.log(this.value)
@@ -84,6 +86,7 @@ VistaAdministrador.prototype = {
       contexto.controlador.agregarPregunta(value, respuestas);
     });
     //asociar el resto de los botones a eventos
+    
   },
 
   limpiarFormulario: function () {
