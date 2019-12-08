@@ -13,4 +13,8 @@ Controlador.prototype = {
     // console.log(this)
     this.modelo.borrarPregunta(id)
       },
+editarPregunta: function(value, respuestas,id){
+  this.modelo.editarPregunta(value, respuestas,id)
+},
+
 };

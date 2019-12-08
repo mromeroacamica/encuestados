@@ -11,8 +11,11 @@ var VistaAdministrador = function (modelo, controlador, elementos) {
   this.modelo.preguntaAgregada.suscribir(function () {
     contexto.reconstruirLista();
   });
-  this.modelo.preguntaEliminada.suscribir(function() { 
-    contexto.reconstruirLista(); 
+  this.modelo.preguntaEliminada.suscribir(function () {
+    contexto.reconstruirLista();
+  });
+  this.modelo.preguntaEditada.suscribir(function () {
+    contexto.reconstruirLista();
   });
 };
 
@@ -32,7 +35,7 @@ VistaAdministrador.prototype = {
     var nuevoItem;
     //completar
     // console.log(pregunta.textoPregunta)
-    nuevoItem = $('<li>',{'class':'list-group-item','id': pregunta.id, 'textoPregunta': pregunta.textoPregunta})
+    nuevoItem = $('<li>', { 'class': 'list-group-item', 'id': pregunta.id, 'textoPregunta': pregunta.textoPregunta })
 
 
     //asignar a nuevoitem un elemento li con clase "list-group-item", id "pregunta.id" y texto "pregunta.textoPregunta"
@@ -65,39 +68,69 @@ VistaAdministrador.prototype = {
     //asociacion de eventos a boton
     e.botonAgregarPregunta.click(function () {
       // console.log(e)
-      if(e.pregunta.val()===''){
+      if (e.pregunta.val() === '') {
 
-      }else{
-      var value = e.pregunta.val();
-      var respuestas = [];
+      } else {
+        var value = e.pregunta.val();
+        var respuestas = [];
 
-      $('[name="option[]"]').each(function () {
-        //completar
-        if (this.value === '') {
+        $('[name="option[]"]').each(function () {
+          //completar
+          if (this.value === '') {
 
-        } else {
-          var cantVotos= 0
-          respuestas.push({'textoRespuesta': this.value, 'cantidad': cantVotos});
+          } else {
+            var cantVotos = 0
+            respuestas.push({ 'textoRespuesta': this.value, 'cantidad': cantVotos });
 
-        }
-        // console.log(this.value)
-        // console.log($('[name="option[]"]')[0].value)
-        // console.log($('[name="option[]"]')[1].value)
-        // respuestas.push
+          }
+          // console.log(this.value)
+          // console.log($('[name="option[]"]')[0].value)
+          // console.log($('[name="option[]"]')[1].value)
+          // respuestas.push
+          // console.log(respuestas)
+        })
         // console.log(respuestas)
-      })
-      // console.log(respuestas)
-      // console.log(contexto)
-      contexto.limpiarFormulario();
-      contexto.controlador.agregarPregunta(value, respuestas);
-    }});
+        // console.log(contexto)
+        contexto.limpiarFormulario();
+        contexto.controlador.agregarPregunta(value, respuestas);
+      }
+    });
     //asociar el resto de los botones a eventos
-    e.botonBorrarPregunta.click(function(){
+    e.botonBorrarPregunta.click(function () {
       // console.log('hola')
       var id = parseInt($('.list-group-item.active').attr('id'));
       contexto.controlador.borrarPregunta(id)
-    })
-    
+    });
+
+    e.botonEditarPregunta.click(function () {
+      console.log('hola')
+      var id = parseInt($('.list-group-item.active').attr('id'));
+      
+      if (e.pregunta.val() === '') {
+
+      } else {
+        var value = e.pregunta.val();
+        // console.log(value)
+        var respuestas = [];
+
+        $('[name="option[]"]').each(function () {
+          //completar
+          // console.log(this)
+          if (this.value!==''){
+            var cantVotos = 0
+            respuestas.push({ 'textoRespuesta': this.value, 'cantidad': cantVotos });
+            // console.log(respuestas)
+          }
+          
+
+        })
+        
+      }
+      contexto.limpiarFormulario();
+      contexto.controlador.editarPregunta(value, respuestas,id);
+
+    });
+
   },
 
   limpiarFormulario: function () {

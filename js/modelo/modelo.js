@@ -9,6 +9,7 @@ var Modelo = function() {
   // console.log(this)
   this.preguntaAgregada = new Evento(this);
   this.preguntaEliminada = new Evento(this);
+  this.preguntaEditada = new Evento(this);
 };
 
 Modelo.prototype = {
@@ -43,6 +44,23 @@ if(index>-1){
 };
 this.preguntaEliminada.notificar();
   },
+
+  editarPregunta: function(nombre, respuesta,id){
+    // console.log(id)
+    const preguntaEncontrada= this.preguntas.find(Element=>Element.id===id);
+    // console.log(preguntaEncontrada)
+    var index= this.preguntas.indexOf(preguntaEncontrada);
+    if(index>-1){
+      // console.log(modelo.preguntas[index])
+      var nuevaPreguntaEditada= {'textoPregunta':nombre, 'id': id, 'cantidadPorRespuesta':respuesta};
+      // console.log(nuevaPreguntaEditada)
+      // console.log(this.preguntas[index])
+      this.preguntas[index]= nuevaPreguntaEditada;
+      
+      this.preguntaEditada.notificar();
+    };
+    
+      },
 
   //se guardan las preguntas
   guardar: function(){
