@@ -7,6 +7,7 @@ var Evento = function(emisor) {
 Evento.prototype = {
   suscribir: function(observador) {
     this.observadores.push(observador);
+    // console.log(this)
   },
   notificar: function() {
     for (var i = 0; i < this.observadores.length; i++) {

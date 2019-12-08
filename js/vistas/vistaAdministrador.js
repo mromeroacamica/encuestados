@@ -11,6 +11,9 @@ var VistaAdministrador = function (modelo, controlador, elementos) {
   this.modelo.preguntaAgregada.suscribir(function () {
     contexto.reconstruirLista();
   });
+  this.modelo.preguntaEliminada.suscribir(function() { 
+    contexto.reconstruirLista(); 
+  });
 };
 
 
@@ -40,7 +43,7 @@ VistaAdministrador.prototype = {
     interiorItem.find('small').text(pregunta.cantidadPorRespuesta.map(function (resp) {
       // console.log(resp.textoRespuesta) aca estaba puesto resp.textoRespuesta y daba error
       // console.log(resp)
-      return " " + resp;
+      return " " + resp.textoRespuesta;
     }));
     nuevoItem.html($('.d-flex').html());
     return nuevoItem;
@@ -62,6 +65,9 @@ VistaAdministrador.prototype = {
     //asociacion de eventos a boton
     e.botonAgregarPregunta.click(function () {
       // console.log(e)
+      if(e.pregunta.val()===''){
+
+      }else{
       var value = e.pregunta.val();
       var respuestas = [];
 
@@ -80,12 +86,17 @@ VistaAdministrador.prototype = {
         // respuestas.push
         // console.log(respuestas)
       })
-      console.log(respuestas)
+      // console.log(respuestas)
       // console.log(contexto)
       contexto.limpiarFormulario();
       contexto.controlador.agregarPregunta(value, respuestas);
-    });
+    }});
     //asociar el resto de los botones a eventos
+    e.botonBorrarPregunta.click(function(){
+      // console.log('hola')
+      var id = parseInt($('.list-group-item.active').attr('id'));
+      contexto.controlador.borrarPregunta(id)
+    })
     
   },
 

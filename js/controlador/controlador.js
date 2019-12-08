@@ -9,4 +9,8 @@ Controlador.prototype = {
   agregarPregunta: function(pregunta, respuestas) {
       this.modelo.agregarPregunta(pregunta, respuestas);
   },
+  borrarPregunta: function(id){
+    // console.log(this)
+    this.modelo.borrarPregunta(id)
+      },
 };

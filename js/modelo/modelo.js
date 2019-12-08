@@ -6,7 +6,9 @@ var Modelo = function() {
   this.ultimoId = 0;
 
   //inicializacion de eventos
+  // console.log(this)
   this.preguntaAgregada = new Evento(this);
+  this.preguntaEliminada = new Evento(this);
 };
 
 Modelo.prototype = {
@@ -27,6 +29,19 @@ Modelo.prototype = {
     // console.log(nuevaPregunta)
     this.guardar();
     this.preguntaAgregada.notificar();
+    // console.log(modelo.preguntas)
+  },
+
+  //borra el id tomando el id por parametro de la pregunta.
+  borrarPregunta: function(id){
+// console.log(id)
+const preguntaEncontrada= this.preguntas.find(Element=>Element.id===id);
+// console.log(preguntaEncontrada)
+var index= this.preguntas.indexOf(preguntaEncontrada);
+if(index>-1){
+  modelo.preguntas.splice(index,1);
+};
+this.preguntaEliminada.notificar();
   },
 
   //se guardan las preguntas
