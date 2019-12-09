@@ -1,7 +1,7 @@
 /*
  * Modelo
  */
-var Modelo = function() {
+var Modelo = function () {
   this.preguntas = [];
   this.ultimoId = 0;
 
@@ -10,22 +10,24 @@ var Modelo = function() {
   this.preguntaAgregada = new Evento(this);
   this.preguntaEliminada = new Evento(this);
   this.preguntaEditada = new Evento(this);
+  this.preguntasBorradas = new Evento(this);
+  this.sumarVotoRespuesta = new Evento(this);
 };
 
 Modelo.prototype = {
   //se obtiene el id más grande asignado a una pregunta
-  obtenerUltimoId: function() {
+  obtenerUltimoId: function () {
     // console.log(this)
     return this.ultimoId
   },
 
   //se agrega una pregunta dado un nombre y sus respuestas
-  agregarPregunta: function(nombre, respuestas) {
+  agregarPregunta: function (nombre, respuestas) {
     var id = this.obtenerUltimoId();
     id++;
-    modelo.ultimoId=id;
+    modelo.ultimoId = id;
     // console.log(respuestas)
-    var nuevaPregunta = {'textoPregunta': nombre, 'id': id, 'cantidadPorRespuesta': respuestas};
+    var nuevaPregunta = { 'textoPregunta': nombre, 'id': id, 'cantidadPorRespuesta': respuestas };
     this.preguntas.push(nuevaPregunta);
     // console.log(nuevaPregunta)
     this.guardar();
@@ -34,35 +36,64 @@ Modelo.prototype = {
   },
 
   //borra el id tomando el id por parametro de la pregunta.
-  borrarPregunta: function(id){
-// console.log(id)
-const preguntaEncontrada= this.preguntas.find(Element=>Element.id===id);
-// console.log(preguntaEncontrada)
-var index= this.preguntas.indexOf(preguntaEncontrada);
-if(index>-1){
-  modelo.preguntas.splice(index,1);
-};
-this.preguntaEliminada.notificar();
+  borrarPregunta: function (id) {
+    // console.log(id)
+    const preguntaEncontrada = this.preguntas.find(Element => Element.id === id);
+    // console.log(preguntaEncontrada)
+    var index = this.preguntas.indexOf(preguntaEncontrada);
+    if (index > -1) {
+      modelo.preguntas.splice(index, 1);
+    };
+    this.guardar();
+    this.preguntaEliminada.notificar();
   },
 
-  editarPregunta: function(nombre, respuesta,id){
+  editarPregunta: function (nombre, respuesta, id) {
     // console.log(id)
-    const preguntaEncontrada= this.preguntas.find(Element=>Element.id===id);
+    const preguntaEncontrada = this.preguntas.find(Element => Element.id === id);
     // console.log(preguntaEncontrada)
-    var index= this.preguntas.indexOf(preguntaEncontrada);
-    if(index>-1){
+    var index = this.preguntas.indexOf(preguntaEncontrada);
+    if (index > -1) {
       // console.log(modelo.preguntas[index])
-      var nuevaPreguntaEditada= {'textoPregunta':nombre, 'id': id, 'cantidadPorRespuesta':respuesta};
+      var nuevaPreguntaEditada = { 'textoPregunta': nombre, 'id': id, 'cantidadPorRespuesta': respuesta };
       // console.log(nuevaPreguntaEditada)
       // console.log(this.preguntas[index])
-      this.preguntas[index]= nuevaPreguntaEditada;
-      
+      this.preguntas[index] = nuevaPreguntaEditada;
+
+      this.guardar();
       this.preguntaEditada.notificar();
     };
-    
-      },
+
+  },
+  borrarTodo: function () {
+    // console.log(this)
+    this.preguntas = [];
+    this.guardar();
+    this.preguntasBorradas.notificar();
+  },
+
+  sumarVoto: function (id) {
+    const preguntaEncontrada = this.preguntas.find(Element => Element.id === id);
+    // console.log(preguntaEncontrada)
+    var index = this.preguntas.indexOf(preguntaEncontrada);
+    if (index > -1) {
+      this.preguntas[index].cantidadPorRespuesta.cantidad++;
+
+      this.guardar();
+    };
+
+  },
 
   //se guardan las preguntas
-  guardar: function(){
+  guardar: function () {
+    localStorage.setItem('clavePreguntas', JSON.stringify(this.preguntas));
+
   },
+
+  //recuperar datos guardados
+  recuperar: function () {
+    var preguntasRecuperadas = JSON.parse(localStorage.getItem('clavePreguntas'));
+    this.preguntas = preguntasRecuperadas;
+  }
+
 };
