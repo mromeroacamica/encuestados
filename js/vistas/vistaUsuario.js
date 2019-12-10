@@ -34,6 +34,7 @@ VistaUsuario.prototype = {
     var preguntas = this.modelo.preguntas;
     preguntas.forEach(function(clave){
       var listaParaGrafico = [[clave.textoPregunta, 'Cantidad']];
+      // console.log(listaParaGrafico);
       var respuestas = clave.cantidadPorRespuesta;
       respuestas.forEach (function(elemento) {
         listaParaGrafico.push([elemento.textoRespuesta,elemento.cantidad]);
@@ -45,12 +46,17 @@ VistaUsuario.prototype = {
 
   reconstruirLista: function() {
     var listaPreguntas = this.elementos.listaPreguntas;
+    // console.log(listaPreguntas)
     listaPreguntas.html('');
     var contexto = this;
     var preguntas = this.modelo.preguntas;
     preguntas.forEach(function(clave){
       //completar
       //agregar a listaPreguntas un elemento div con valor "clave.textoPregunta", texto "clave.textoPregunta", id "clave.id"
+      listaPreguntas.append($('<div>', {
+        value: clave.textoPregunta,
+        text: clave.textoPregunta,
+      }));
       var respuestas = clave.cantidadPorRespuesta;
       contexto.mostrarRespuestas(listaPreguntas,respuestas, clave);
     })
