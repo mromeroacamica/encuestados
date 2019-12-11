@@ -50,6 +50,7 @@ Modelo.prototype = {
 
   editarPregunta: function (nombre, respuesta, id) {
     // console.log(id)
+  
     const preguntaEncontrada = this.preguntas.find(Element => Element.id === id);
     // console.log(preguntaEncontrada)
     var index = this.preguntas.indexOf(preguntaEncontrada);
@@ -72,13 +73,23 @@ Modelo.prototype = {
     this.preguntasBorradas.notificar();
   },
 
-  sumarVoto: function (id) {
-    const preguntaEncontrada = this.preguntas.find(Element => Element.id === id);
+  agregarVoto: function (nombrePregunta, respuestaSeleccionada) {
+    // console.log(nombrePregunta)
+    // console.log(respuestaSeleccionada)
+    if(respuestaSeleccionada!==undefined){
+    const preguntaEncontrada = this.preguntas.find(Element => Element.textoPregunta === nombrePregunta);
     // console.log(preguntaEncontrada)
     var index = this.preguntas.indexOf(preguntaEncontrada);
     if (index > -1) {
-      this.preguntas[index].cantidadPorRespuesta.cantidad++;
+      const respuestaEncontrada = this.preguntas[index].cantidadPorRespuesta.find(Element => Element.textoRespuesta === respuestaSeleccionada);
 
+      // console.log(respuestaEncontrada)
+      respuestaEncontrada.cantidad++;
+      // console.log(respuestaEncontrada)
+
+      // this.preguntas[index].cantidadPorRespuesta.cantidad++;
+      this.sumarVotoRespuesta.notificar();
+    };
       this.guardar();
     };
 

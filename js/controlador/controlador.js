@@ -19,8 +19,8 @@ editarPregunta: function(value, respuestas,id){
 borrarTodo:function(){
   this.modelo.borrarTodo();
 },
-sumarVoto: function(id){
-  this.modelo.sumarVoto(id);
+agregarVoto: function(nombrePregunta,respuestaSeleccionada){
+  this.modelo.agregarVoto(nombrePregunta,respuestaSeleccionada);
 }
 
 };
