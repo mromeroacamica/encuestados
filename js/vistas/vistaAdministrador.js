@@ -26,15 +26,17 @@ var VistaAdministrador = function (modelo, controlador, elementos) {
 VistaAdministrador.prototype = {
   //lista
   inicializar: function () {
-    if(this.modelo.preguntas.length !== 0){
+    this.modelo.recuperar();
+    this.configuracionDeBotones();
+    validacionDeFormulario();
+    // console.log(this.modelo.preguntas.length)
+    if(this.modelo.preguntas.length > 0){
+
     //llamar a los metodos para reconstruir la lista, configurar botones y validar formularios
     console.log(this.modelo.preguntas)
     this.reconstruirLista();
-    this.modelo.recuperar();
-    this.reconstruirLista();
+    // this.reconstruirLista();
   }
-  this.configuracionDeBotones();
-  validacionDeFormulario();
 },
 
   construirElementoPregunta: function (pregunta) {

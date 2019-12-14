@@ -104,7 +104,10 @@ Modelo.prototype = {
   //recuperar datos guardados
   recuperar: function () {
     var preguntasRecuperadas = JSON.parse(localStorage.getItem('clavePreguntas'));
+    if(preguntasRecuperadas!== null){
     this.preguntas = preguntasRecuperadas;
+  
   }
+}
 
 };

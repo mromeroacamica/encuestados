@@ -29,7 +29,7 @@ var VistaUsuario = function (modelo, controlador, elementos) {
 VistaUsuario.prototype = {
   //muestra la lista por pantalla y agrega el manejo del boton agregar
   inicializar: function () {
-    if (this.modelo.preguntas.length !== 0) {
+    // if (this.modelo.preguntas.length !== 0) {
       // console.log(this.modelo.preguntas)
     this.reconstruirLista();
     var elementos = this.elementos;
@@ -40,7 +40,7 @@ VistaUsuario.prototype = {
       contexto.agregarVotos();
     });
     
-  }
+  
 
 },
 
