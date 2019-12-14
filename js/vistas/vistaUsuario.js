@@ -29,16 +29,20 @@ var VistaUsuario = function (modelo, controlador, elementos) {
 VistaUsuario.prototype = {
   //muestra la lista por pantalla y agrega el manejo del boton agregar
   inicializar: function () {
+    if (this.modelo.preguntas.length !== 0) {
+      // console.log(this.modelo.preguntas)
     this.reconstruirLista();
     var elementos = this.elementos;
     var contexto = this;
-
+    this.reconstruirGrafico();
+    
     elementos.botonAgregar.click(function () {
       contexto.agregarVotos();
     });
+    
+  }
 
-    this.reconstruirGrafico();
-  },
+},
 
   //reconstruccion de los graficos de torta
   reconstruirGrafico: function () {
@@ -63,6 +67,7 @@ VistaUsuario.prototype = {
     listaPreguntas.html('');
     var contexto = this;
     var preguntas = this.modelo.preguntas;
+    if (this.modelo.preguntas !== null) {
     preguntas.forEach(function (clave) {
       //completar
       //agregar a listaPreguntas un elemento div con valor "clave.textoPregunta", texto "clave.textoPregunta", id "clave.id"
@@ -73,7 +78,7 @@ VistaUsuario.prototype = {
       }));
       var respuestas = clave.cantidadPorRespuesta;
       contexto.mostrarRespuestas(listaPreguntas, respuestas, clave);
-    })
+    })}
   },
 
   //muestra respuestas
