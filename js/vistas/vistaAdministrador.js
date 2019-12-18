@@ -137,9 +137,9 @@ VistaAdministrador.prototype = {
 
         })
 
+        contexto.controlador.editarPregunta(value, respuestas, id);
       }
       contexto.limpiarFormulario();
-      contexto.controlador.editarPregunta(value, respuestas, id);
 
     });
 
