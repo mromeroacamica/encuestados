@@ -119,6 +119,7 @@ VistaAdministrador.prototype = {
       var id = parseInt($('.list-group-item.active').attr('id'));
 
       if (e.pregunta.val() === '') {
+        alert('debes introducir en el campo PREGUNTA y en el campo RESPUESTA, el texto para editar la pregunta seleccionada')
 
       } else {
         var value = e.pregunta.val();
